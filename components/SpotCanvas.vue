@@ -1,9 +1,9 @@
 <template>
   <div class="spot-canvas-container">
     <canvas 
-    ref="canvas"
+      ref="canvas"
       class="spot-canvas"
-      >
+    >
       reserv
     </canvas>
   </div>
