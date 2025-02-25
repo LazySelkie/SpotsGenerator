@@ -1,10 +1,12 @@
 <template>
-  <canvas 
-    class="spot-canvas"
-    id="canvas"
-  >
-    reserv
-  </canvas>
+  <div class="spot-canvas-container">
+    <canvas 
+      class="spot-canvas"
+      id="canvas"
+    >
+      reserv
+    </canvas>
+  </div>
 </template>
 
 
@@ -31,8 +33,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .spot-canvas {
   flex: 1 0;
-  width: 80vw;
+  width: 75vw;
   height: 90vh;
-  background-color: #c22424;
+  // background-color: #c22424;
 }
 </style>
