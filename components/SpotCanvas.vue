@@ -1,7 +1,7 @@
 <template>
   <canvas 
+    ref="canvas"
     class="spot-canvas"
-    id="canvas"
   >
     reserv
   </canvas>
@@ -9,23 +9,34 @@
 
 
 <script setup lang="ts">
-const canvas: Ref<HTMLCanvasElement> = ref({});
-const ctx = ref(null);
+const canvas = ref<HTMLCanvasElement | null>(null);
+const ctx = ref<CanvasRenderingContext2D | null>(null);
 
 onMounted(() => {
-  canvas.value = document.getElementById('canvas');
-  ctx.value = canvas.getContext('2d');
+  ctx.value = canvas.value?.getContext('2d') || null;
+  const width = <number>canvas.value?.width;
 
-  ctx.beginPath();
-  ctx.arc(canvas.width / 2, canvas.height / 2, 100, 0, 2 * Math.PI);
-  ctx.fillStyle = '#ff0000';
-  ctx.fill();
+  console.log(<number>canvas.value?.width / 2)
 
-  ctx.font = '50px Arial';
-  ctx.fillStyle = '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.fillText('Hello, Vue!', canvas.width / 2, canvas.height / 2);
+  // ctx.value?.arc(canvas.value?.width / 2, canvas.value?.height / 2, 100, 0, 2 * Math.PI);
+  // ctx.value?.fillStyle = '#ff0000';
+  // ctx.value?.fill();
+
+  // ctx.value?.font = '50px Arial';
+  // ctx.value?.fillStyle = '#ffffff';
+  // ctx.value?.textAlign = 'center';
+  // ctx.value?.fillText('Hello, Vue!', canvas.value.width / 2, canvas.value.height / 2);
+
+  render();
 });
+
+const render = () => {
+  if (!ctx.value) {
+      return;
+  }
+
+  ctx.value.fillText('jelledev.com', 50, 50);
+};
 </script>
 
 <style lang="scss" scoped>
