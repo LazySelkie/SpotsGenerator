@@ -1,8 +1,10 @@
 <template>
-  <div>
-   TEST TYPESCRIPT
-   {{ obj.id }}
-   {{ v }}
+  <div class="spot-main">
+    <canvas class="spot-canvas"></canvas>
+
+    <div class="spot-sidebar">
+
+    </div>
   </div>
 </template>
 
@@ -11,7 +13,7 @@ let v: String = "some string";
 
 interface testType {
   id: String,
-  something?: Number // этого property может не быть в этом интерфейсе
+  something?: Number,
 }
 
 let obj: testType = {
@@ -19,9 +21,7 @@ let obj: testType = {
   something: 5
 }
 
-// const testFunc = <String> () => { // тут приведение результата к типу String происходит
-//   return "blabla";
-// }
+
 const testFunc = ():String => {
   return "blabla";
 }
@@ -47,3 +47,26 @@ function someArrayFunc(): String[] {
 }
 
 </script>
+
+<style lang="scss">
+.spot-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #6b6b6b;
+}
+
+.spot-canvas {
+  flex: 1 0;
+  width: 100%;
+  height: 100%;
+  background-color: #c22424;
+}
+
+.spot-sidebar {
+  flex: 1 0;
+  background-color: #61b600;
+}
+</style>

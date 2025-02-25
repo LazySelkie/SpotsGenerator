@@ -3,6 +3,11 @@
 </template>
 
 <script>
-import { NuxtPage } from '#components';
 
 </script>
+
+<style>
+body {
+  margin: 0;
+}
+</style>
