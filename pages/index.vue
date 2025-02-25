@@ -1,9 +1,21 @@
 <template>
   <div class="spot-main">
-    <canvas class="spot-canvas"></canvas>
+    <SpotCanvas />
 
     <div class="spot-sidebar">
+      <input type="text">
 
+      <span> Настройки </span>
+      <input type="color">
+      <input type="range">
+      <input type="color">
+      <input type="color">
+
+      <input type="range">
+      <section></section>
+
+      <button @click="generate">Сгенерировать</button>
+      <button @click="save">Сохранить</button>
     </div>
   </div>
 </template>
@@ -22,11 +34,13 @@ let obj: testType = {
 }
 
 
-const testFunc = ():String => {
-  return "blabla";
+const generate = () => {
+  console.log("generate");
 }
 
-console.log(testFunc())
+const save = () => {
+  console.log("save");
+}
 
 class TestClass {
   name: String | Number;
@@ -53,20 +67,15 @@ function someArrayFunc(): String[] {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #6b6b6b;
-}
-
-.spot-canvas {
-  flex: 1 0;
-  width: 100%;
-  height: 100%;
-  background-color: #c22424;
 }
 
 .spot-sidebar {
   flex: 1 0;
+  width: 20vw;
+  height: 90vh;
   background-color: #61b600;
 }
 </style>
