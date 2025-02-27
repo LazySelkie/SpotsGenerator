@@ -18,16 +18,6 @@ onMounted(() => {
   ctx.value = canvas.value?.getContext('2d') || null;
   const width = <number>canvas.value?.width;
 
-  console.log(<number>canvas.value?.width / 2)
-
-  // ctx.value?.arc(canvas.value?.width / 2, canvas.value?.height / 2, 100, 0, 2 * Math.PI);
-  // ctx.value?.fillStyle = '#ff0000';
-  // ctx.value?.fill();
-
-  // ctx.value?.font = '50px Arial';
-  // ctx.value?.fillStyle = '#ffffff';
-  // ctx.value?.textAlign = 'center';
-  // ctx.value?.fillText('Hello, Vue!', canvas.value.width / 2, canvas.value.height / 2);
 
   render();
 });
