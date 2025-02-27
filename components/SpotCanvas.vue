@@ -3,6 +3,8 @@
     <canvas 
       ref="canvas"
       class="spot-canvas"
+      width="1000"
+      height="500"
     >
       reserv
     </canvas>
@@ -11,14 +13,20 @@
 
 
 <script setup lang="ts">
-const canvas = ref<HTMLCanvasElement | null>(null);
-const ctx = ref<CanvasRenderingContext2D | null>(null);
+const canvas = ref();
+const ctx = ref();
 
 onMounted(() => {
-  ctx.value = canvas.value?.getContext('2d') || null;
-  const width = <number>canvas.value?.width;
+  ctx.value = <CanvasRenderingContext2D>canvas.value?.getContext('2d') || null;
 
+  const width = canvas.value.clientWidth;
+  const height = canvas.value.clientHeight;
 
+  if (canvas.value?.width !== width || canvas.value?.height !== height) {
+    canvas.value.width = width;
+    canvas.value.height = height;
+  }  
+  
   render();
 });
 
@@ -27,7 +35,13 @@ const render = () => {
       return;
   }
 
-  ctx.value.fillText('jelledev.com', 50, 50);
+  const cotx = <CanvasRenderingContext2D>ctx.value;
+  cotx.beginPath();
+  cotx.arc(100, 100, 25, Math.PI * -0.1, Math.PI * 0.1 , true);
+  cotx.lineTo(100, 100);
+  cotx.closePath();
+  cotx.fillStyle = 'red';
+  cotx.fill();
 };
 </script>
 
@@ -36,6 +50,5 @@ const render = () => {
   flex: 1 0;
   width: 75vw;
   height: 90vh;
-  // background-color: #c22424;
 }
 </style>
