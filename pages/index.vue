@@ -39,13 +39,7 @@ interface Spot {
   countRay: number;
   circleRadius: number;
   center: Point;
-}
-
-let obj: testType = {
-  id: "Test string",
-  something: 5
-}
-
+};
 
 const generate = () => {
   console.log("generate");

@@ -1,12 +1,14 @@
 <template>
   <div class="spot-input-wrapper">
-    <label for="spot-input-label">{{ props.label }}</label>
-		<input 
-      id="spot-input" 
-      :type="props.type"
-      :value="props.value"
-      @input="v => emits('input', v)"
-    >
+    <label :for="inputId">{{ props.label }}</label>
+    <div class="input-wrapper">
+      <input
+        :id="inputId" 
+        :type="props.type"
+        :value="props.value"
+        @input="v => emits('input', v)"
+      >
+    </div>
   </div>
 </template>
 
@@ -26,8 +28,14 @@ const props = defineProps({
     default: '',
   }
 });
+
+const inputId = useId();
 </script>
 
 <style lang="scss">
+.spot-input-wrapper {
+  input {
 
+  }
+}
 </style>
