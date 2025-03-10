@@ -12,17 +12,8 @@
 </template>
 
 <script setup lang="ts">
-interface Point {
-  x: number;
-  y: number;
-};
-
-interface Spot {
-  color: string;
-  countRay: number;
-  circleRadius: number;
-  center: Point;
-}
+import type { Point } from '../types/Point';
+import type { Spot } from '../types/Spot';
 
 const canvas = ref();
 const ctx = ref();
