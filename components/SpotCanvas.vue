@@ -48,20 +48,20 @@ const render = () => {
 
   const cotx = <CanvasRenderingContext2D>ctx.value;
   
-  createSpot1('yellow', { x: 200, y: 200 }, 100);
+  // createSpot1('yellow', { x: 200, y: 200 }, 100);
 
-  createSpot2('yellow', { x: 600, y: 200 }, 100);
+  // createSpot2('yellow', { x: 600, y: 200 }, 100);
 
-  createSpot3('yellow', { x: 200, y: 600 }, 100);
+  // createSpot3('yellow', { x: 200, y: 600 }, 100);
 
   createSpot4('yellow', { x: 600, y: 600 }, 100);
 };
 
-const createBezierCurve = (start: Point, end: Point, point1: Point, point2: Point) => {
-  ctx.value.beginPath();
-  ctx.value.moveTo(start.x, start.y);
-  ctx.value.bezierCurveTo(point1.x, point1.y, point2.x, point2.y, end.x, end.y);
-  ctx.value.stroke();
+const createBezierCurve = (region: Path2D, start: Point, end: Point, point1: Point, point2: Point) => {
+  // ctx.value.beginPath();
+  // region.moveTo(start.x, start.y);
+  region.bezierCurveTo(point1.x, point1.y, point2.x, point2.y, end.x, end.y);
+  // ctx.value.stroke();
 };
 
 const createCircle = (color: string, center: Point, radius: number) => {
@@ -264,7 +264,7 @@ const createSpot3 = (color: string, center: Point, radius: number) => {
 };
 
 const createSpot4 = (color: string, center: Point, radius: number) => {
-  createCircle(color, center, radius);
+  // createCircle(color, center, radius);
 
   const radiusBezier = 1.5 * radius;
   const radiusBezierInner = 0.9 * radius;
@@ -314,14 +314,14 @@ const createSpot4 = (color: string, center: Point, radius: number) => {
 
     pointBezier.x = pointStart.x + distance * Math.cos(angle);
     pointBezier.y = pointStart.y + distance * Math.sin(angle);
-    createCircle('red', pointBezier, 2);
+    // createCircle('red', pointBezier, 2);
 
     // angle = Math.random() * Math.PI + randomAngle + Math.PI;
     // pointBezier2.x = pointEnd.x + Math.cos(angle) * distance;
     // pointBezier2.y = pointEnd.y + Math.sin(angle) * distance;
     pointBezierReverse.x = 2 * pointStart.x - pointBezier.x;
     pointBezierReverse.y = 2 * pointStart.y - pointBezier.y;
-    createCircle('blue', pointBezierReverse, 2);
+    // createCircle('blue', pointBezierReverse, 2);
 
     dots.push({ x: pointStart.x, y: pointStart.y });
     dotsBezier.push(pointBezierReverse);
@@ -332,10 +332,18 @@ const createSpot4 = (color: string, center: Point, radius: number) => {
   }
   console.log(dots)
   console.log(dotsBezier)
+  let region = new Path2D();
+  ctx.value.beginPath();
+  ctx.value.moveTo(dots[0].x, dots[0].y);
   for (let i = 0; i < dots.length - 1; i++) {
-    createBezierCurve(dots[i], dots[i+1], dotsBezier[2*i+1], dotsBezier[2*i+2]);
+    createBezierCurve(ctx.value, dots[i], dots[i+1], dotsBezier[2*i+1], dotsBezier[2*i+2]);
   }
-  createBezierCurve(dots[dots.length - 1], dots[0], dotsBezier[dotsBezier.length - 1], dotsBezier[0]);
+  createBezierCurve(region, dots[dots.length - 1], dots[0], dotsBezier[dotsBezier.length - 1], dotsBezier[0]);
+  // ctx.value.stroke();
+  ctx.value.closePath();
+
+  ctx.value.fillStyle = 'rgba(255, 99, 71, 0.3)';
+  ctx.value.fill();
 };
 </script>
 
