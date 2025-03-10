@@ -11,7 +11,6 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 interface Point {
   x: number;

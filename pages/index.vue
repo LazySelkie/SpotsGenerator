@@ -7,6 +7,9 @@
 
       <h2> Настройки </h2>
       <div style="display: flex; align-items: center;">
+        <InputColor
+          label="Цвет пятен"
+        />
         <input class="glass-color-input" type="color">
         <input class="glass-range-input" type="range">
         <input class="glass-color-input" type="color">
