@@ -39,11 +39,11 @@ const render = () => {
 
   const cotx = <CanvasRenderingContext2D>ctx.value;
   
-  // createSpot1('yellow', { x: 200, y: 200 }, 100);
+  createSpot1('yellow', { x: 200, y: 200 }, 100);
 
-  // createSpot2('yellow', { x: 600, y: 200 }, 100);
+  createSpot2('yellow', { x: 600, y: 200 }, 100);
 
-  // createSpot3('yellow', { x: 200, y: 600 }, 100);
+  createSpot3('yellow', { x: 200, y: 600 }, 100);
   
   let spot4: Spot = { 
     color: 'yellow', // примеры: 'yellow', 'rgba(255, 99, 71, 0.3)'
@@ -52,10 +52,6 @@ const render = () => {
     center: {x: 600, y: 600},
   };
   createSpot4(spot4);
-};
-
-const createBezierCurve = (start: Point, end: Point, point1: Point, point2: Point) => {
-  ctx.value.bezierCurveTo(point1.x, point1.y, point2.x, point2.y, end.x, end.y);
 };
 
 const createCircle = (color: string, center: Point, radius: number) => {
@@ -115,15 +111,16 @@ const createSpot1 = (color: string, center: Point, radius: number) => {
     }
   }
   ctx.value.strokeStyle = 'black';
-  
+  // Начинаем контур непосредственно пятна
+  ctx.value.beginPath();
   for (let i = 0; i < countRay - 1; i++) {
-    createBezierCurve(dots[i], dots[i+1], dotsBezier[2*i], dotsBezier[2*i+1]);
-    // ctx.value.fillStyle = 'blue';
-    // ctx.value.fill();
+    ctx.value.bezierCurveTo(dotsBezier[2*i].x, dotsBezier[2*i].y, dotsBezier[2*i+1].x, dotsBezier[2*i+1].y, dots[i+1].x, dots[i+1].y);
   }
-  createBezierCurve(dots[dots.length-1], dots[0], dotsBezier[dotsBezier.length-2], dotsBezier[dotsBezier.length-1]);
-  // ctx.value.fillStyle = 'blue';
-  // ctx.value.fill();
+  ctx.value.bezierCurveTo(dotsBezier[dotsBezier.length-2].x, dotsBezier[dotsBezier.length-2].y, dotsBezier[dotsBezier.length-1].x, dotsBezier[dotsBezier.length-1].y, dots[0].x, dots[0].y);
+  // Заканчиваем контур пятна и заполняем его
+  ctx.value.closePath();
+  ctx.value.fillStyle = color;
+  ctx.value.fill();
 };
 
 const createSpot2 = (color: string, center: Point, radius: number) => {
@@ -190,14 +187,20 @@ const createSpot2 = (color: string, center: Point, radius: number) => {
   }
   console.log(dots)
   console.log(dotsBezier)
+  // Начинаем контур непосредственно пятна
+  ctx.value.beginPath();
   for (let i = 0; i < dots.length - 1; i++) {
-    createBezierCurve(dots[i], dots[i+1], dotsBezier[2*i+1], dotsBezier[2*i+2]);
+    ctx.value.bezierCurveTo(dotsBezier[2*i+1].x, dotsBezier[2*i+1].y, dotsBezier[2*i+2].x, dotsBezier[2*i+2].y, dots[i+1].x, dots[i+1].y);
   }
-  createBezierCurve(dots[dots.length - 1], dots[0], dotsBezier[dotsBezier.length - 1], dotsBezier[0]);
+  ctx.value.bezierCurveTo(dotsBezier[dotsBezier.length - 1].x, dotsBezier[dotsBezier.length - 1].y, dotsBezier[0].x, dotsBezier[0].y, dots[0].x, dots[0].y);
+  // Заканчиваем контур пятна и заполняем его
+  ctx.value.closePath();
+  ctx.value.fillStyle = color;
+  ctx.value.fill();
 };
 
 const createSpot3 = (color: string, center: Point, radius: number) => {
-  createCircle(color, center, radius);
+  // createCircle(color, center, radius);
 
   let dots: Point[] = [];
   let dotsBezier: Point[] = [];
@@ -247,14 +250,17 @@ const createSpot3 = (color: string, center: Point, radius: number) => {
   }
   ctx.value.strokeStyle = 'black';
   
+  // Начинаем контур непосредственно пятна
+  ctx.value.beginPath();
+  ctx.value.moveTo(dots[0].x, dots[0].y);
   for (let i = 0; i < countRay - 1; i++) {
-    createBezierCurve(dots[i], dots[i+1], dotsBezier[2*i], dotsBezier[2*i+1]);
-    // ctx.value.fillStyle = 'blue';
-    // ctx.value.fill();
+    ctx.value.bezierCurveTo(dotsBezier[2*i].x, dotsBezier[2*i].y, dotsBezier[2*i+1].x, dotsBezier[2*i+1].y, dots[i+1].x, dots[i+1].y);
   }
-  createBezierCurve(dots[dots.length-1], dots[0], dotsBezier[dotsBezier.length-2], dotsBezier[dotsBezier.length-1]);
-  // ctx.value.fillStyle = 'blue';
-  // ctx.value.fill();
+  ctx.value.bezierCurveTo(dotsBezier[dotsBezier.length-2].x, dotsBezier[dotsBezier.length-2].y, dotsBezier[dotsBezier.length-1].x, dotsBezier[dotsBezier.length-1].y, dots[0].x, dots[0].y);
+  // Заканчиваем контур пятна и заполняем его
+  ctx.value.closePath();
+  ctx.value.fillStyle = color;
+  ctx.value.fill();
 };
 
 const createSpot4 = (spot: Spot) => {
@@ -327,9 +333,9 @@ const createSpot4 = (spot: Spot) => {
   ctx.value.beginPath();
   ctx.value.moveTo(dots[0].x, dots[0].y);
   for (let i = 0; i < dots.length - 1; i++) {
-    createBezierCurve(dots[i], dots[i+1], dotsBezier[2*i+1], dotsBezier[2*i+2]);
+    ctx.value.bezierCurveTo(dotsBezier[2*i+1].x, dotsBezier[2*i+1].y, dotsBezier[2*i+2].x, dotsBezier[2*i+2].y, dots[i+1].x, dots[i+1].y);
   }
-  createBezierCurve(dots[dots.length - 1], dots[0], dotsBezier[dotsBezier.length - 1], dotsBezier[0]);
+  ctx.value.bezierCurveTo(dotsBezier[dotsBezier.length - 1].x, dotsBezier[dotsBezier.length - 1].y, dotsBezier[0].x, dotsBezier[0].y, dots[0].x, dots[0].y);
   // Заканчиваем контур пятна и заполняем его
   ctx.value.closePath();
   ctx.value.fillStyle = spot.color;
