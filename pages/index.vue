@@ -7,8 +7,9 @@
 
       <h2> Настройки </h2>
       <div style="display: flex; align-items: center;">
-        <InputColor
+        <s-input-color
           label="Цвет пятен"
+          @input=""
         />
         <input class="glass-color-input" type="color">
         <input class="glass-range-input" type="range">
@@ -22,16 +23,22 @@
       <button class="glass-button" style="margin-bottom: 8px;" @click="generate">Сгенерировать</button>
       <button class="glass-button" @click="save">Сохранить</button>
       <input type="range">
+      <input type="">
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-let v: String = "some string";
+interface Point {
+  x: number;
+  y: number;
+};
 
-interface testType {
-  id: String,
-  something?: Number,
+interface Spot {
+  color: string;
+  countRay: number;
+  circleRadius: number;
+  center: Point;
 }
 
 let obj: testType = {
