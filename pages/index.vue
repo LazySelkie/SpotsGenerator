@@ -32,17 +32,24 @@
 </template>
 
 <script setup lang="ts">
-interface Point {
-  x: number;
-  y: number;
+import type { Point } from '../types/Point';
+import type { Spot } from '../types/Spot';
+
+interface SpotSettings {
+  seed?: number, // если захотим все же делать сиды; возможно, его лучше строкой а не числом
+  spotColor1: string, // spotColor1 и spotColor2 - цвета, между которыми рандомятся цвета пятен
+  spotColor2: string,
+  backgroundColor: string,
+  radiusMin: number,
+  radiusMax: number,
+  opacity: number, // прозрачность пятен; мб лучше двумя настройками сделать (макс и мин)
+  numberOfRays: number, // число лучей; мб тоже 2 настройки (мин-макс)
+  spotsAmountMin: number, // spotsAmountMin и spotsAmountMax - мин. и макс. число генерируемых пятен
+  spotsAmountMax: number,
+
+  // что-нибудь про кучность? Тип насколько разбросаны по канвасу отдельные пятна
 };
 
-interface Spot {
-  color: string;
-  countRay: number;
-  circleRadius: number;
-  center: Point;
-};
 
 const generate = () => {
   console.log("generate");
