@@ -6,9 +6,11 @@
         :id="inputId" 
         :type="props.type"
         :value="props.value"
-        @input="v => emits('input', v)"
+        @input="v => emits('input', (v.target as HTMLInputElement).value)"
       >
-      <slot name='additional'></slot>
+      <slot name="add">
+
+      </slot>
     </div>
   </div>
 </template>
@@ -33,7 +35,7 @@ const props = defineProps({
 const inputId = useId();
 </script>
 
-<style lang="scss">
+<style lang='scss' scoped>
 .spot-input-wrapper {
   display: flex;
   align-items: center;

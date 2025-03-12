@@ -10,24 +10,30 @@
       <div>
         <s-input-color
           label="Цвет пятен"
-          @input=""
+          :color="spotsSettings.color"
+          @input="v => spotsSettings.color = v"
         />
         <s-input-color
           label="Второй цвет"
-          @input=""
+          :color="spotsSettings.secondColor"
+          @input="v => spotsSettings.secondColor = v"
         />
         <s-input-color
           label="Цвет фона"
-          @input=""
+          :color="spotsSettings.backgroundColor"
+          @input="v => spotsSettings.backgroundColor = v"
         />
         <s-input-range
           label="Прозрачность"
-          @input=""
+          :range="spotsSettings.opacity"
+          @input="v => spotsSettings.opacity = v"
         />
-        <s-input-range
+        <!-- <s-input-min-max
           label="Размер пятен"
+          :min="spotsSettings.radiusMin"
+          :max="spotsSettings.radiusMax"
           @input=""
-        />
+        /> -->
         
         <s-input-range
           label="Способ генерации пятен"
@@ -43,55 +49,41 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import type { Point } from '../types/Point';
-import type { Spot } from '../types/Spot';
+<script setup lang='ts'>
+import type { SpotsSettings } from '../types/SpotSettings.ts';
 
-interface SpotSettings {
-  seed?: number, // если захотим все же делать сиды; возможно, его лучше строкой а не числом
-  spotColor1: string, // spotColor1 и spotColor2 - цвета, между которыми рандомятся цвета пятен
-  spotColor2: string,
-  backgroundColor: string,
-  radiusMin: number,
-  radiusMax: number,
-  opacity: number, // прозрачность пятен; мб лучше двумя настройками сделать (макс и мин)
-  numberOfRays: number, // число лучей; мб тоже 2 настройки (мин-макс)
-  spotsAmountMin: number, // spotsAmountMin и spotsAmountMax - мин. и макс. число генерируемых пятен
-  spotsAmountMax: number,
+const spotsSettings = ref<SpotsSettings>({
+  color: '#000000',
+  secondColor: '#000000',
+  backgroundColor: '#000000',
+  opacity: '100',
+  radiusMin: 0,
+  radiusMax: Infinity,
+  // numberOfRays: null,
+  spotsAmountMin: 0,
+  spotsAmountMax: Infinity,
+});
 
-  // что-нибудь про кучность? Тип насколько разбросаны по канвасу отдельные пятна
-};
+watch(spotsSettings, (newValue, oldValue) => {
+  localStorage.setItem('spotsSettings', JSON.stringify(newValue));
+});
 
+onMounted(() => {
+  if (localStorage.getItem('spotsSettings')) {
+    spotsSettings.value = JSON.parse(localStorage.getItem('spotsSettings') || '{}');
+  }
+});
 
 const generate = () => {
-  console.log("generate");
+  console.log('generate');
 }
 
 const save = () => {
-  console.log("save");
+  console.log('save');
 }
-
-class TestClass {
-  name: String | Number;
-  constructor(name: String | Number) {
-    this.name = name || "";
-  }
-}
-
-let testClassObj: TestClass = new TestClass("bla1");
-console.log(testClassObj)
-
-function someFunc(): String {
-  return "ts";
-}
-
-function someArrayFunc(): String[] {
-  return ["test"];
-}
-
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .spot-main {
   display: flex;
   width: 100vw;

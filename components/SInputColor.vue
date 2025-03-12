@@ -23,8 +23,8 @@ const props = defineProps({
 });
 </script>
 
-<style lang='scss'>
-.spot-input-color-wrapper .input-wrapper {
+<style lang='scss' scoped>
+.spot-input-color-wrapper :deep(.input-wrapper) {
   width: 25px;
   height: 25px;
   border-radius: 50px;
