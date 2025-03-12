@@ -39,16 +39,34 @@ const render = () => {
 
   const cotx = <CanvasRenderingContext2D>ctx.value;
   
-  createSpot1('yellow', { x: 200, y: 200 }, 100);
+  let spot1: Spot = { 
+    color: 'yellow',
+    countRay: 12,
+    circleRadius: 100,
+    center: { x: 200, y: 200 },
+  };
+  createSpot1(spot1);
 
-  createSpot2('yellow', { x: 600, y: 200 }, 100);
+  let spot2: Spot = { 
+    color: 'yellow',
+    countRay: 12,
+    circleRadius: 100,
+    center: { x: 600, y: 200 },
+  };
+  createSpot2(spot2);
 
-  createSpot3('yellow', { x: 200, y: 600 }, 100);
+  let spot3: Spot = { 
+    color: 'yellow',
+    countRay: 12,
+    circleRadius: 100,
+    center: { x: 200, y: 600 },
+  };
+  createSpot3(spot3);
   
   let spot4: Spot = { 
     color: 'yellow', // примеры: 'yellow', 'rgba(255, 99, 71, 0.3)'
     countRay: 12,
-    circleRadius: 25,
+    circleRadius: 100,
     center: { x: 600, y: 600 },
   };
   createSpot4(spot4);
@@ -61,8 +79,9 @@ const createCircle = (color: string, center: Point, radius: number) => {
   ctx.value.fill();
 };
 
-const createSpot1 = (color: string, center: Point, radius: number) => {
-  createCircle(color, center, radius);
+const createSpot1 = (spot: Spot) => {
+  const { center, circleRadius: radius, color } = spot;
+  // createCircle(color, center, radius);
 
   let dots: Point[] = [];
   let dotsBezier: Point[] = [];
@@ -83,10 +102,11 @@ const createSpot1 = (color: string, center: Point, radius: number) => {
 
     dots.push({ x, y });
     
-    ctx.value.beginPath();
-    ctx.value.moveTo(center.x, center.y);
-    ctx.value.lineTo(x, y);
-    ctx.value.stroke();
+    // Изображение опорных лучей
+    // ctx.value.beginPath();
+    // ctx.value.moveTo(center.x, center.y);
+    // ctx.value.lineTo(x, y);
+    // ctx.value.stroke();
 
     let point1: Point = { x: 0, y: 0 };
     let point2: Point = { x: 0, y: 0 };
@@ -123,8 +143,9 @@ const createSpot1 = (color: string, center: Point, radius: number) => {
   ctx.value.fill();
 };
 
-const createSpot2 = (color: string, center: Point, radius: number) => {
-  createCircle(color, center, radius);
+const createSpot2 = (spot: Spot) => {
+  const { center, circleRadius: radius, color } = spot;
+  // createCircle(color, center, radius);
 
   const radiusBezier = 1.5 * radius;
 
@@ -153,10 +174,11 @@ const createSpot2 = (color: string, center: Point, radius: number) => {
     const randomAngle = randomDeltaAngle * Math.PI / 180; // в радианах
     fullCircleAngle += randomAngle;
     
-    ctx.value.beginPath();
-    ctx.value.moveTo(center.x, center.y);
-    ctx.value.lineTo(pointStart.x, pointStart.y);
-    ctx.value.stroke();
+    // Изображение опорных лучей
+    // ctx.value.beginPath();
+    // ctx.value.moveTo(center.x, center.y);
+    // ctx.value.lineTo(pointStart.x, pointStart.y);
+    // ctx.value.stroke();
 
     pointEnd.x = center.x + radiusBezier * Math.cos(fullCircleAngle);
     pointEnd.y = center.y + radiusBezier * Math.sin(fullCircleAngle);
@@ -199,13 +221,14 @@ const createSpot2 = (color: string, center: Point, radius: number) => {
   ctx.value.fill();
 };
 
-const createSpot3 = (color: string, center: Point, radius: number) => {
-  // createCircle(color, center, radius);
-
+const createSpot3 = (spot: Spot) => {
+  const { center, circleRadius: radius, color } = spot;
+  // createCircle(spot.color, center, radius);
+  
   let dots: Point[] = [];
   let dotsBezier: Point[] = [];
 
-  const countRay = 12;
+  const countRay = spot.countRay;
   const angleRay = 360 / countRay * Math.PI / 180;
 
   for (let i = 0; i < countRay; i++) {
@@ -220,11 +243,11 @@ const createSpot3 = (color: string, center: Point, radius: number) => {
     const y = center.y + (radius + (-1)**i * delta) * Math.sin(angle);
 
     dots.push({ x, y });
-    
-    ctx.value.beginPath();
-    ctx.value.moveTo(center.x, center.y);
-    ctx.value.lineTo(x, y);
-    ctx.value.stroke();
+    // Изображение опорных лучей
+    // ctx.value.beginPath();
+    // ctx.value.moveTo(center.x, center.y);
+    // ctx.value.lineTo(x, y);
+    // ctx.value.stroke();
 
     let point1: Point = { x: 0, y: 0 };
     let point2: Point = { x: 0, y: 0 };
@@ -264,9 +287,9 @@ const createSpot3 = (color: string, center: Point, radius: number) => {
 };
 
 const createSpot4 = (spot: Spot) => {
-  const center = spot.center;
-  const radiusBezier = 1.5 * spot.circleRadius;
-  const radiusBezierInner = 0.9 * spot.circleRadius;
+  const { center, circleRadius: radius, color } = spot;
+  const radiusBezier = 1.5 * radius;
+  const radiusBezierInner = 0.9 * radius;
 
   // Синяя окружность - максимальная длина генерируемых лучей
   // ctx.value.strokeStyle = 'blue';
@@ -338,7 +361,7 @@ const createSpot4 = (spot: Spot) => {
   ctx.value.bezierCurveTo(dotsBezier[dotsBezier.length - 1].x, dotsBezier[dotsBezier.length - 1].y, dotsBezier[0].x, dotsBezier[0].y, dots[0].x, dots[0].y);
   // Заканчиваем контур пятна и заполняем его
   ctx.value.closePath();
-  ctx.value.fillStyle = spot.color;
+  ctx.value.fillStyle = color;
   ctx.value.fill();
 };
 </script>
