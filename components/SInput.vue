@@ -8,6 +8,7 @@
         :value="props.value"
         @input="v => emits('input', v)"
       >
+      <slot name='additional'></slot>
     </div>
   </div>
 </template>
