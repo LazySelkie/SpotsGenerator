@@ -36,9 +36,11 @@ const inputId = useId();
 .spot-input-wrapper {
   display: flex;
   align-items: center;
-  
-  input {
+  justify-content: flex-end;
+  width: inherit;
 
+  label {
+    margin: 5px;
   }
 }
 </style>
