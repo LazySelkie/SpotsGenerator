@@ -34,6 +34,9 @@ const inputId = useId();
 
 <style lang="scss">
 .spot-input-wrapper {
+  display: flex;
+  align-items: center;
+  
   input {
 
   }

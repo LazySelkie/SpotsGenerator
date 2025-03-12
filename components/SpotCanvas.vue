@@ -48,8 +48,8 @@ const render = () => {
   let spot4: Spot = { 
     color: 'yellow', // примеры: 'yellow', 'rgba(255, 99, 71, 0.3)'
     countRay: 12,
-    circleRadius: 100,
-    center: {x: 600, y: 600},
+    circleRadius: 25,
+    center: { x: 600, y: 600 },
   };
   createSpot4(spot4);
 };
@@ -276,7 +276,7 @@ const createSpot4 = (spot: Spot) => {
 
   ctx.value.strokeStyle = 'black';
 
-  const maxDeltaAngle = 20;
+  const maxDeltaAngle = 30;
   let fullCircleAngle = 0;
 
   let pointStart: Point = { 

@@ -6,7 +6,10 @@
       <input class="glass-text-input" type="text">
 
       <h2> Настройки </h2>
-      <div style="display: flex; align-items: center;">
+      <div
+        class="spot-sidebar-settings"
+        style="display: flex; align-items: center;"
+        >
         <s-input-color
           label="Цвет пятен"
           @input=""
@@ -111,6 +114,11 @@ canvas {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  .spot-sidebar-settings {
+    display: flex;
+    flex-direction: column;
+  }
 }
 h2 {
   // color: rgba(0, 0, 0, 0.721);

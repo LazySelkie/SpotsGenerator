@@ -3,7 +3,7 @@
     <s-input
 			type="color"
 			:label="props.label"
-			:value="color"
+			:value="props.color"
 			@input="v => emits('input', v)"
 		/>
   </div>
@@ -24,23 +24,6 @@ const props = defineProps({
 </script>
 
 <style lang='scss'>
-// .spot-input-color-wrapper {
-//   input[type="color"] {
-//     /* width: 10px; */
-//     /* height: 10px; */
-//     /* display: inline-block; */
-//     appearance: none;
-//     /* block-size: unset; */
-//     background-color: unset;
-//     box-sizing: unset;
-//     /* padding: 0; */
-//     margin: 0;
-//     border: unset;
-//     border-radius: 100%;
-//     inline-size: 20px;
-//   }
-// }
-
 .spot-input-color-wrapper .input-wrapper {
   width: 25px;
   height: 25px;
