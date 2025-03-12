@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import type { Point } from '../types/Point';
 import type { Spot } from '../types/Spot';
 
@@ -207,8 +207,6 @@ const createSpot2 = (spot: Spot) => {
     pointStart.x = pointEnd.x;
     pointStart.y = pointEnd.y;
   }
-  console.log(dots)
-  console.log(dotsBezier)
   // Начинаем контур непосредственно пятна
   ctx.value.beginPath();
   for (let i = 0; i < dots.length - 1; i++) {
@@ -366,7 +364,7 @@ const createSpot4 = (spot: Spot) => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .spot-canvas {
   flex: 1 0;
   width: 75vw;
