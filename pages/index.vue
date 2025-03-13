@@ -1,6 +1,9 @@
 <template>
   <div class="spot-main">
-    <SpotCanvas />
+    <SpotCanvas 
+      ref="spot-canvas"
+      :spots-settings="spotsSettings"
+    />
 
     <div class="spot-sidebar">
       <input class="glass-text-input" type="text">
@@ -28,12 +31,13 @@
           :range="spotsSettings.opacity"
           @input="v => spotsSettings.opacity = v"
         />
-        <!-- <s-input-min-max
+        <s-input-min-max
           label="Размер пятен"
           :min="spotsSettings.radiusMin"
           :max="spotsSettings.radiusMax"
-          @input=""
-        /> -->
+          @min-value="v => spotsSettings.radiusMin = v"
+          @max-value="v => spotsSettings.radiusMax = v"
+        />
         
         <s-input-range
           label="Способ генерации пятен"
@@ -42,31 +46,39 @@
       </div>
 
       <section></section>
-
+      
       <button class="glass-button" style="margin-bottom: 8px;" @click="generate">Сгенерировать</button>
       <button class="glass-button" @click="save">Сохранить</button>
+      <button class="glass-button" @click="clear">Очистить</button>
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
+import SpotCanvas from '../components/SpotCanvas.vue';
 import type { SpotsSettings } from '../types/SpotSettings.ts';
+
+const spotCanvas = useTemplateRef<InstanceType<typeof SpotCanvas>>('spot-canvas');
 
 const spotsSettings = ref<SpotsSettings>({
   color: '#000000',
   secondColor: '#000000',
-  backgroundColor: '#000000',
+  backgroundColor: '#ffffff',
   opacity: '100',
-  radiusMin: 0,
-  radiusMax: Infinity,
+  radiusMin: '0',
+  radiusMax: '100',
   // numberOfRays: null,
   spotsAmountMin: 0,
   spotsAmountMax: Infinity,
 });
 
-watch(spotsSettings, (newValue, oldValue) => {
-  localStorage.setItem('spotsSettings', JSON.stringify(newValue));
-});
+watch(
+  spotsSettings,
+  (newValue, oldValue) => {
+    localStorage.setItem('spotsSettings', JSON.stringify(newValue));
+  },
+  { deep: true, }
+);
 
 onMounted(() => {
   if (localStorage.getItem('spotsSettings')) {
@@ -76,10 +88,18 @@ onMounted(() => {
 
 const generate = () => {
   console.log('generate');
+
+  spotCanvas.value?.render();
 }
 
 const save = () => {
   console.log('save');
+}
+
+const clear = () => {
+  console.log('clear');
+
+  spotCanvas.value?.clearCanvas();
 }
 </script>
 
@@ -88,9 +108,6 @@ const save = () => {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: #6b6b6b;
-
-  background: rgb(238,174,202);
   background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
@@ -100,13 +117,6 @@ const save = () => {
   align-items: center;
   justify-content: center;
   margin-left: 20px;
-}
-
-canvas {
-  border: 1px solid rgba(253, 253, 253, 0.477);
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.322);
-  height: 99%;
 }
 
 .spot-sidebar {

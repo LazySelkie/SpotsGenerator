@@ -14,6 +14,14 @@
 <script setup lang='ts'>
 import type { Point } from '../types/Point';
 import type { Spot } from '../types/Spot';
+import type { SpotsSettings } from '../types/SpotSettings.ts';
+
+const props = defineProps({
+	spotsSettings: {
+		type: Object as PropType<SpotsSettings>,
+    default:() => {},
+	},
+});
 
 const canvas = ref();
 const ctx = ref();
@@ -37,8 +45,11 @@ const render = () => {
     return;
   }
 
-  const cotx = <CanvasRenderingContext2D>ctx.value;
-  
+  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+
+  ctx.value.fillStyle = props.spotsSettings.backgroundColor;
+  ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height);
+
   let spot1: Spot = { 
     color: 'yellow',
     countRay: 12,
@@ -62,14 +73,19 @@ const render = () => {
     center: { x: 200, y: 600 },
   };
   createSpot3(spot3);
-  
+
   let spot4: Spot = { 
-    color: 'yellow', // примеры: 'yellow', 'rgba(255, 99, 71, 0.3)'
+    color: props.spotsSettings.color,
     countRay: 12,
     circleRadius: 100,
     center: { x: 600, y: 600 },
   };
   createSpot4(spot4);
+};
+
+const clearCanvas = () => {
+  // ctx.value.fillStyle = props.spotsSettings.backgroundColor;
+  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
 };
 
 const createCircle = (color: string, center: Point, radius: number) => {
@@ -362,6 +378,11 @@ const createSpot4 = (spot: Spot) => {
   ctx.value.fillStyle = color;
   ctx.value.fill();
 };
+
+defineExpose({
+  render,
+  clearCanvas
+});
 </script>
 
 <style lang='scss' scoped>
@@ -369,5 +390,9 @@ const createSpot4 = (spot: Spot) => {
   flex: 1 0;
   width: 75vw;
   height: 90vh;
+  border: 1px solid rgba(253, 253, 253, 0.477);
+  border-radius: 10px;
+  // background-color: rgba(255, 255, 255, 0.322);
+  // height: 99%;
 }
 </style>
