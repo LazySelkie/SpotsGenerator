@@ -1,14 +1,16 @@
 <template>
   <div class="spot-input-wrapper">
     <label :for="inputId">{{ props.label }}</label>
-    <div class="input-wrapper">
-      <input
-        :id="inputId" 
-        :type="props.type"
-        :value="props.value"
-        @input="v => emits('input', (v.target as HTMLInputElement).value)"
-      >
-      <slot name="additional"></slot>
+    <div style="flex: 1">
+      <div class="input-wrapper">
+        <input
+          :id="inputId" 
+          :type="props.type"
+          :value="props.value"
+          @input="v => emits('input', (v.target as HTMLInputElement).value)"
+        >
+        <slot name="additional"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -39,9 +41,12 @@ const inputId = useId();
   align-items: center;
   justify-content: flex-end;
   width: inherit;
+  flex-wrap: wrap;
 
   label {
     margin: 5px;
+    flex: 1;
+    text-align: end;
   }
 }
 </style>
