@@ -8,9 +8,7 @@
         :value="props.value"
         @input="v => emits('input', (v.target as HTMLInputElement).value)"
       >
-      <slot name="add">
-
-      </slot>
+      <slot name="additional"></slot>
     </div>
   </div>
 </template>
@@ -22,7 +20,7 @@ const props = defineProps({
 		type: String,
     default: '',
 	},
-  type: { 
+  type: {
 		type: String,
     default: '',
   },
