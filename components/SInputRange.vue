@@ -24,10 +24,4 @@ const props = defineProps({
 </script>
 
 <style lang='scss' scoped>
-.spot-input-range-wrapper .input-wrapper {
-
-	input[type="range"] {
-
-	}
-}
 </style>

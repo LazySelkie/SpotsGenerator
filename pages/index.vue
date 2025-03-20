@@ -3,16 +3,26 @@
     <SpotCanvas 
       ref="spot-canvas"
       :spots-settings="spotsSettings"
+      @seed="v => spotsSettings.seed.number = v"
     />
 
     <div class="spot-sidebar">
       <h3> Семя для генерации пятен </h3>
-      <input
-        class="glass-text-input" 
-        type="number"
-        :value="spotsSettings.seed"
-        @input="v => spotsSettings.seed = Number((v.target as HTMLInputElement).value)"
-      >
+      <div class="seed-wrapper">
+        <input
+          v-model="spotsSettings.seed.checked"
+          class="seed-checkbox" 
+          type="checkbox"
+        >
+        <input
+          class="seed-input" 
+          type="number"
+          max="999998"
+          :disabled="!spotsSettings.seed.checked"
+          :value="spotsSettings.seed.number"
+          @input="v => spotsSettings.seed.number = Number((v.target as HTMLInputElement).value)"
+        >
+      </div>
 
       <h3> Настройки </h3>
 
@@ -74,7 +84,10 @@ import type { SpotsSettings } from '../types/SpotSettings.ts';
 const spotCanvas = useTemplateRef<InstanceType<typeof SpotCanvas>>('spot-canvas');
 
 const spotsSettings = ref<SpotsSettings>({
-  seed: 0,
+  seed: {
+    number: 0,
+    checked: false,
+  },
   color: '#000000',
   secondColor: '#000000',
   backgroundColor: '#ffffff',
@@ -175,7 +188,17 @@ h3 {
   background-color: rgba(117, 135, 172, 0.107);
 }
 
-.glass-text-input {
+.seed-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.seed-checkbox {
+  width: 20px;
+  height: 20px;
+}
+.seed-input {
+  flex: 1;
   display: inline-block;
   padding: 8px 16px;
   border: 0;
@@ -190,7 +213,7 @@ h3 {
   cursor: pointer;
   text-transform: uppercase;
 }
-.glass-text-input:focus-visible {
+.seed-input:focus-visible {
   outline: 3px solid rgba(255, 255, 255, 0.473);
 }
 </style>

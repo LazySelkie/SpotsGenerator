@@ -14,12 +14,10 @@
 <script setup lang='ts'>
 import type { Point } from '../types/Point';
 import type { Spot } from '../types/Spot';
+import type { Seed } from '../types/Seed';
 import type { SpotsSettings } from '../types/SpotSettings.ts';
 
-interface Seed {
-  number: number;
-};
-
+const emits = defineEmits(['seed']);
 const props = defineProps({
 	spotsSettings: {
 		type: Object as PropType<SpotsSettings>,
@@ -76,11 +74,15 @@ const render = () => {
   // };
   // createSpot3(spot3);
 
-  let seed: Seed = {
-    number: props.spotsSettings.seed,
+  let seed: Seed = Object.assign({}, props.spotsSettings.seed);
+
+  if (!props.spotsSettings.seed.checked) {
+    let seedNumber = Math.floor(1 + Math.random() * 999998);
+    emits('seed', seedNumber);
+    seed.number = seedNumber;
   }
 
-  const spotAmount = props.spotsSettings.spotsAmountMin + randomSeed(seed) * (props.spotsSettings.spotsAmountMax - props.spotsSettings.spotsAmountMin);
+  const spotAmount = Math.floor(props.spotsSettings.spotsAmountMin + randomSeed(seed) * (props.spotsSettings.spotsAmountMax - props.spotsSettings.spotsAmountMin));
 
   for (let i = 0; i < spotAmount; i++) {
     const x = randomSeed(seed, canvas.value.width) * canvas.value.width;
