@@ -61,11 +61,6 @@
           @min-value="v => spotsSettings.spotsAmountMin = v"
           @max-value="v => spotsSettings.spotsAmountMax = v"
         />
-        
-        <s-input-range
-          label="Способ генерации пятен"
-          @input=""
-        />
       </div>
 
       <section></section>
