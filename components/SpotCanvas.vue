@@ -108,6 +108,14 @@ const render = () => {
   // createSpot4(spot4);
 };
 
+const generateImageFile = (): string => {
+  if (!canvas.value) {
+    return "";
+  }
+  const dataURL = canvas.value.toDataURL(); // именно canvas, не ctx
+  return dataURL;
+}
+
 const interpolateColor = (color1: string, color2: string, factor: number): string => {
   const r1 = parseInt(color1.slice(1, 3), 16);
   const g1 = parseInt(color1.slice(3, 5), 16);
@@ -434,7 +442,8 @@ const hexToRgba = (hex: string, opacity: string) => {
 
 defineExpose({
   render,
-  clearCanvas
+  clearCanvas,
+  generateImageFile
 });
 </script>
 
