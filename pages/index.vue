@@ -6,6 +6,7 @@
     />
 
     <div class="spot-sidebar">
+      <h3> Семя для генерации пятен </h3>
       <input
         class="glass-text-input" 
         type="number"
@@ -13,7 +14,7 @@
         @input="v => spotsSettings.seed = Number((v.target as HTMLInputElement).value)"
       >
 
-      <h2> Настройки </h2>
+      <h3> Настройки </h3>
 
       <div>
         <s-input-color
@@ -147,7 +148,7 @@ const clear = () => {
   justify-content: center;
 }
 
-h2 {
+h3 {
   align-self: center;
   color: rgba(245, 245, 245, 0.899);
 }
