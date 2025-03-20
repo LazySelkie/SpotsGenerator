@@ -3,12 +3,14 @@
     <s-input
       type="number"
       :label="props.label"
+      :min="0"
       :value="String(props.min)"
       @input="v => emits('minValue', Number(v))"
     >
       <template #additional>
         <input
           type="number"
+          :min="1"
           :value="String(props.max)"
           @input="v => emits('maxValue', Number((v.target as HTMLInputElement).value))"
         >

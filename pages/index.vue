@@ -6,7 +6,12 @@
     />
 
     <div class="spot-sidebar">
-      <input class="glass-text-input" type="text">
+      <input
+        class="glass-text-input" 
+        type="number"
+        :value="spotsSettings.seed"
+        @input="v => spotsSettings.seed = Number((v.target as HTMLInputElement).value)"
+      >
 
       <h2> Настройки </h2>
 
@@ -38,6 +43,13 @@
           @min-value="v => spotsSettings.radiusMin = v"
           @max-value="v => spotsSettings.radiusMax = v"
         />
+        <s-input-min-max
+          label="Число пятен"
+          :min="spotsSettings.spotsAmountMin"
+          :max="spotsSettings.spotsAmountMax"
+          @min-value="v => spotsSettings.spotsAmountMin = v"
+          @max-value="v => spotsSettings.spotsAmountMax = v"
+        />
         
         <s-input-range
           label="Способ генерации пятен"
@@ -61,15 +73,15 @@ import type { SpotsSettings } from '../types/SpotSettings.ts';
 const spotCanvas = useTemplateRef<InstanceType<typeof SpotCanvas>>('spot-canvas');
 
 const spotsSettings = ref<SpotsSettings>({
+  seed: 0,
   color: '#000000',
   secondColor: '#000000',
   backgroundColor: '#ffffff',
   opacity: '100',
   radiusMin: 0,
   radiusMax: 100,
-  // numberOfRays: null,
-  spotsAmountMin: '',
-  spotsAmountMax: '100',
+  spotsAmountMin: 0,
+  spotsAmountMax: 100,
 });
 
 watch(

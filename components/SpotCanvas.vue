@@ -74,7 +74,15 @@ const render = () => {
   // };
   // createSpot3(spot3);
 
-  const spotAmount = 1 + Math.random() * 99;
+
+
+  let rand = props.spotsSettings.seed;
+  Math.random = (): number => {
+    let x = Math.sin(rand++) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const spotAmount = props.spotsSettings.spotsAmountMin + Math.random() * (props.spotsSettings.spotsAmountMax - props.spotsSettings.spotsAmountMin);
 
   for (let i = 0; i < spotAmount; i++) {
     const x = Math.random() * canvas.value.width;
@@ -92,7 +100,6 @@ const render = () => {
 
     let spot: Spot = {
       color: color,
-      countRay: 12,
       center: { x, y },
     };
 
@@ -445,7 +452,5 @@ defineExpose({
   height: 90vh;
   border: 1px solid rgba(253, 253, 253, 0.477);
   border-radius: 10px;
-  // background-color: rgba(255, 255, 255, 0.322);
-  // height: 99%;
 }
 </style>
