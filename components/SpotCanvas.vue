@@ -1,6 +1,6 @@
 <template>
   <div class="spot-canvas-container">
-    <canvas 
+    <canvas
       ref="canvas"
       class="spot-canvas"
       width="1000"
@@ -35,9 +35,9 @@ onMounted(() => {
   if (canvas.value?.width !== width || canvas.value?.height !== height) {
     canvas.value.width = width;
     canvas.value.height = height;
-  }  
+  }
   
-  render();
+  // render();
 });
 
 const render = () => {
@@ -50,37 +50,78 @@ const render = () => {
   ctx.value.fillStyle = props.spotsSettings.backgroundColor;
   ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height);
 
-  let spot1: Spot = { 
-    color: 'yellow',
-    countRay: 12,
-    circleRadius: 100,
-    center: { x: 200, y: 200 },
-  };
-  createSpot1(spot1);
+  // let spot1: Spot = { 
+  //   color: 'yellow',
+  //   countRay: 12,
+  //   circleRadius: 100,
+  //   center: { x: 200, y: 200 },
+  // };
+  // createSpot1(spot1);
 
-  let spot2: Spot = { 
-    color: 'yellow',
-    countRay: 12,
-    circleRadius: 100,
-    center: { x: 600, y: 200 },
-  };
-  createSpot2(spot2);
+  // let spot2: Spot = { 
+  //   color: 'yellow',
+  //   countRay: 12,
+  //   circleRadius: 100,
+  //   center: { x: 600, y: 200 },
+  // };
+  // createSpot2(spot2);
 
-  let spot3: Spot = { 
-    color: 'yellow',
-    countRay: 12,
-    circleRadius: 100,
-    center: { x: 200, y: 600 },
-  };
-  createSpot3(spot3);
+  // let spot3: Spot = { 
+  //   color: 'yellow',
+  //   countRay: 12,
+  //   circleRadius: 100,
+  //   center: { x: 200, y: 600 },
+  // };
+  // createSpot3(spot3);
 
-  let spot4: Spot = { 
-    color: props.spotsSettings.color,
-    countRay: 12,
-    circleRadius: 100,
-    center: { x: 600, y: 600 },
-  };
-  createSpot4(spot4);
+  const spotAmount = 1 + Math.random() * 99;
+
+  for (let i = 0; i < spotAmount; i++) {
+    const x = Math.random() * canvas.value.width;
+    const y = Math.random() * canvas.value.height;
+
+    let colorFactor = 1;
+    if (spotAmount !== 1) {
+      colorFactor = i / (spotAmount - 1);
+    }
+    const color = interpolateColor(
+      props.spotsSettings.color,
+      props.spotsSettings.secondColor,
+      colorFactor
+    );
+
+    let spot: Spot = {
+      color: color,
+      countRay: 12,
+      center: { x, y },
+    };
+
+    createSpot4(spot);
+  }
+
+  // let spot4: Spot = { 
+  //   color: props.spotsSettings.color,
+  //   countRay: 12,
+  //   center: { x: 600, y: 600 },
+  // };
+
+  // createSpot4(spot4);
+};
+
+const interpolateColor = (color1: string, color2: string, factor: number): string => {
+  const r1 = parseInt(color1.slice(1, 3), 16);
+  const g1 = parseInt(color1.slice(3, 5), 16);
+  const b1 = parseInt(color1.slice(5, 7), 16);
+
+  const r2 = parseInt(color2.slice(1, 3), 16);
+  const g2 = parseInt(color2.slice(3, 5), 16);
+  const b2 = parseInt(color2.slice(5, 7), 16);
+
+  const r = Math.round(r1 + factor * (r2 - r1));
+  const g = Math.round(g1 + factor * (g2 - g1));
+  const b = Math.round(b1 + factor * (b2 - b1));
+
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
 const clearCanvas = () => {
@@ -301,7 +342,11 @@ const createSpot3 = (spot: Spot) => {
 };
 
 const createSpot4 = (spot: Spot) => {
-  const { center, circleRadius: radius, color } = spot;
+  const { center } = spot;
+  const color = hexToRgba(spot.color, props.spotsSettings.opacity);
+
+  const radius = props.spotsSettings.radiusMin + Math.random() * props.spotsSettings.radiusMax;
+
   const radiusBezier = 1.5 * radius;
   const radiusBezierInner = 0.9 * radius;
 
@@ -313,7 +358,7 @@ const createSpot4 = (spot: Spot) => {
 
   ctx.value.strokeStyle = 'black';
 
-  const maxDeltaAngle = 30;
+  const maxDeltaAngle = 20;
   let fullCircleAngle = 0;
 
   let pointStart: Point = { 
@@ -378,6 +423,14 @@ const createSpot4 = (spot: Spot) => {
   ctx.value.fillStyle = color;
   ctx.value.fill();
 };
+
+const hexToRgba = (hex: string, opacity: string) => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+  return result 
+    ? `rgb(${[parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)].join(' ')} / ${opacity}%)` 
+    : null;
+}
 
 defineExpose({
   render,

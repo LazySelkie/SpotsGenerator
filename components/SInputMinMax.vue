@@ -3,14 +3,14 @@
     <s-input
       type="number"
       :label="props.label"
-      :value="props.min"
-      @input="v => emits('minValue', v)"
+      :value="String(props.min)"
+      @input="v => emits('minValue', Number(v))"
     >
       <template #additional>
         <input
           type="number"
-          :value="props.max"
-          @input="v => emits('maxValue', (v.target as HTMLInputElement).value)"
+          :value="String(props.max)"
+          @input="v => emits('maxValue', Number((v.target as HTMLInputElement).value))"
         >
       </template>
     </s-input>
@@ -25,12 +25,12 @@ const props = defineProps({
     default: '',
   },
   min: {
-    type: String,
-    default: '0',
+    type: Number,
+    default: 0,
   },
   max: {
-    type: String,
-    default: '100',
+    type: Number,
+    default: 100,
   },
 });
 </script>

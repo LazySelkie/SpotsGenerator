@@ -68,8 +68,8 @@ const spotsSettings = ref<SpotsSettings>({
   radiusMin: '0',
   radiusMax: '100',
   // numberOfRays: null,
-  spotsAmountMin: 0,
-  spotsAmountMax: Infinity,
+  spotsAmountMin: '',
+  spotsAmountMax: '100',
 });
 
 watch(

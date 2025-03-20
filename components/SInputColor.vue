@@ -39,5 +39,4 @@ const props = defineProps({
 		transform: translate(-25%, -25%)
 	}
 }
-
 </style>
