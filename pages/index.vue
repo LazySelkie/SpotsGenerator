@@ -106,6 +106,12 @@ const generate = () => {
 
 const save = () => {
   console.log('save');
+
+  let imageData = spotCanvas.value?.generateImageFile() || "";
+  const downloadLink = document.createElement('a');
+  downloadLink.href = imageData;
+  downloadLink.download = 'untitled.png';
+  downloadLink.click();
 }
 
 const clear = () => {
